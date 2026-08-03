@@ -84,10 +84,10 @@ def test_dataset_syntax_rejects_empty_entry():
 
     from swift.dataset.dataset_syntax import DatasetSyntax
 
-    # An empty or whitespace-only dataset entry (e.g. an unset shell variable
-    # wrapped in quotes in a `--dataset "$DS1" "$DS2"` invocation) must raise a
-    # clear ValueError instead of crashing deep inside with a cryptic
-    # `os.path.exists(None)` TypeError.
+    # An empty entry crashes deep inside with a cryptic `os.path.exists(None)`
+    # TypeError (the `::` split nulls the value first), and a whitespace-only
+    # entry silently parses to an empty dataset id. Both (e.g. an unset shell
+    # variable in `--dataset "$DS1" "$DS2"`) must raise a clear ValueError.
     for entry in ('', '   ', '\t', '\n'):
         with pytest.raises(ValueError, match='empty dataset entry'):
             DatasetSyntax.parse(entry)

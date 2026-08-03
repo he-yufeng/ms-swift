@@ -55,8 +55,7 @@ class DatasetSyntax:
     @classmethod
     def parse(cls, dataset: str) -> 'DatasetSyntax':
         """Parse the dataset from the command line"""
-        if dataset:
-            dataset = dataset.strip()
+        dataset = dataset.strip()
         if not dataset:
             raise ValueError('Received an empty dataset entry. Check `--dataset`/`--val_dataset` for a stray empty '
                              'or whitespace-only string (e.g. an unset shell variable wrapped in quotes).')
